@@ -1,0 +1,11 @@
+<% if @parent == nil || @patrent != 0 %>
+    <h1>New question</h1>
+<% else %>
+    <h1>Anwser to:</h1>
+    <%= render "post", post: @parent %>
+    <hr>
+<% end %>
+
+<%= render "shared/errors", object: @posts %>
+
+<%= render "form" %>

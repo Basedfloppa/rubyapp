@@ -1,0 +1,35 @@
+<div>
+    <p>
+        <% if @profile.name != nil && @profile.name != "" %>
+            <%= @profile.name %>
+        <%else%>
+            <%= @profile.email.split("@").at(0) %>
+        <%end%> , 
+        <%= (Date.today - @profile.created_at.to_date).to_s.split("/").at(1) %> days since joined </p>
+    <p>Your posts:</p>
+    <% Post.where(:author => @profile.id ).each do |post| %>
+        <hr>
+        <div id = "post-<%= post.id %>">
+            <h2>
+                <%= sanitize post.title.html_safe %> 
+                    on
+                <time datetime="<%= post.formatted_created_at %>">
+                    <%= post.formatted_created_at %>
+                </time>
+            </h2>
+
+            <p>
+                <%= sanitize truncate post.body.html_safe, length:100 %>
+            </p>
+
+            <%= link_to "show", post_url(post) %>
+            <%= link_to "anwser(#{Post.where(:parent => post.id).count} current)", new_post_url(parent: post)%>
+            <% if current_user.id == @profile.id %>
+                <%= link_to "edit", edit_post_url(post) %>
+                <%= link_to "delete", post_url(post), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+            <% end %>
+            <%= button_to "^", posts_upd_url(upvote: "up",id: post.id), data: {turbo_method: :upd}%> ( <%=post.rating%> ) <%= button_to "˅", posts_upd_url(upvote: "down",id: post.id), data: {turbo_method: :upd} %>
+        </div>
+        <hr>
+    <%end%>
+</div>

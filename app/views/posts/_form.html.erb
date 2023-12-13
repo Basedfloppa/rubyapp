@@ -1,0 +1,23 @@
+<%= form_with model: @posts do |f| %>
+    
+    <div>
+        <%= f.label :title%>
+        <%= f.text_field :title%>
+    </div>
+
+    <div>
+        <%= f.label :body %>
+        <%= f.text_area :body %>
+    </div>
+    
+    <%= f.hidden_field :parent, value: @parent != nil ? @parent.id : 0 %>
+
+    <%= f.hidden_field :author, value: current_user.id %>
+    <%= f.hidden_field :anonimity, value: false %>
+
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+
+    <%= f.submit "Submit question" %>
+    
+<% end %>

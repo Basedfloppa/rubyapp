@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>App</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_include_tag "turbo", type: "module" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <%= yield %>
+  <body>
+    <div>
+      <ul class = "hr" >
+        <li><%= link_to "Home", root_url %></li>
+        <% flash.each do |k,v| %>
+          <%= k.to_s + " " + v %>
+        <% end %>
+      </ul>
+    </div>
+  </body>
+</html>
+
+<style>
+  ul.hr {
+    bottom: 0;
+    padding: 10px;
+    margin: 0;
+    padding: 4px;
+  }
+  ul.hr li {
+    display: inline;
+    margin-right: 5px; 
+  }
+</style>

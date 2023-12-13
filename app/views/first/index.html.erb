@@ -1,0 +1,55 @@
+<hr>
+    <%user = User.find_by(id: current_user.id)%>
+    <div id="rightcol">
+        <p>
+            <% if current_user %>
+                <% if user.name != nil && user.name != "" %>
+                    <%= link_to user.name , first_url(current_user.id) %>
+                 <% else %>
+                    <%= link_to user.email.split("@").at(0), first_url(current_user.id) %>
+                <% end %>
+                /
+                <%= link_to "Sign out", destroy_user_session_url, "data-turbo-method": :delete %>
+            <% else %>
+                <%= link_to "Sign up",  new_user_registration_url %>
+                / 
+                <%= link_to "Log in",  new_user_session_url %>
+            <% end %>
+        </p>
+    </div>
+
+    <div align="middle">
+        <% if user_signed_in? %>
+            <% if user.name != nil && user.name != "" %>
+                <h1>Welcome <%= user.name %> <h1>
+            <% else %>
+                <h1>Welcome <%= user.email.split("@").at(0) %></h1>
+            <% end %>
+        <% else %>
+            <h1>Добро пожаловать на форум!</h1>
+        <% end %>
+    </div>
+<hr>
+<p>Здесь вы можете общаться с другими участниками, задавать вопросы и делиться своим опытом.</p>
+
+<h1>Questions:</h1>
+
+<% if user_signed_in? %>
+    <%= link_to "Create a new question!", new_post_url %>
+<% end %>
+
+<%= paginate @posts %>
+
+<% @posts.each do |post| %>
+    <%= render "posts/post", post: post %>
+<% end %>
+
+<%= paginate @posts %>
+
+
+<style type="text/css">
+   #rightcol { 
+    margin-top:"auto";
+    float: right;
+   }
+</style>

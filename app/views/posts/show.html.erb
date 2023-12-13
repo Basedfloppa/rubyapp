@@ -1,0 +1,22 @@
+
+<%= render "post", post: @posts %>
+
+<hr>
+
+<%= paginate @children %>
+
+<div>
+    <% if @children != nil %>
+        <% @children.each do |chield| %>
+            <%= render "post", post: chield %>
+        <% end %>
+    <% end %>
+</div>
+
+<%= paginate @children%>
+
+<style>
+    div{
+        margin-left: 20px
+    }
+</style>
